@@ -2,9 +2,6 @@ import React from "react";
 import { Card, Media, Heading } from "react-bulma-components";
 
 const MovieItem = ({ name, year, image }) => {
-  name = "Forest Gump";
-  year = "1994";
-  image = "https://upload.wikimedia.org/wikipedia/hr/0/04/Forrest.jpg";
   return (
     <Card>
       <Card.Image src={image} />
