@@ -8,9 +8,8 @@ const CardView = ({ movies }) => {
       {movies.map((movie, index) => {
         return (
           <Columns.Column
-            size={3}
             key={index}
-            className="column is-12-mobile is-3-tablet is-3-desktop"
+            className="column is-12-mobile is-2-tablet is-2-desktop card-column"
           >
             <MovieItem movieData={movie} />
           </Columns.Column>

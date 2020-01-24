@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "./App.css";
 
 import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Container, Section } from "react-bulma-components";
+import { Container, Section, Menu } from "react-bulma-components";
 import CardView from "./components/CardView";
 import TableView from "./components/TableView";
 import SearchInput from "./components/SearchInput";
@@ -14,7 +14,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Link
+  NavLink
 } from "react-router-dom";
 
 class App extends React.Component {
@@ -49,51 +49,109 @@ class App extends React.Component {
       searchInput: e.target.value
     });
   };
+
+  sort = param => {
+    switch (param) {
+      case "popularity":
+        console.log("popularity");
+
+        break;
+      case "year":
+        console.log(this.props);
+        console.log(this.setState({ movies: {} }));
+        break;
+      case "title":
+        console.log("title");
+        break;
+      case "rating":
+        console.log("rating");
+        break;
+      default:
+        console.log("def");
+    }
+  };
+
   render() {
     const data = this.props.movies.data || {};
     const moviesData = data.results ? data.results : [];
     return (
       <Router>
-        <Section className="search-section has-background-dark">
-          <Container>
+        <Section className="header columns is-fullheight">
+          <Section className="header-logo column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+            <p className="has-text-grey is-small">
+              <em>MovieStore by Mladen Gajic </em>
+            </p>
+          </Section>
+          <Section className="header-search-section column is-10">
             <SearchInput
               value={this.state.searchInput}
               onChange={this._onChangeHandler}
               onClick={this._getMovie}
               onKeyDown={this._handleKeyDown}
             />
-          </Container>
+          </Section>
         </Section>
 
-        <Section>
-          <Container>
-            <Link to="/card-view">Cards</Link>
-            <Link to="/table-view">List</Link>
+        <Section className="main columns is-fullheight">
+          <Menu className="main-menu column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+            <Menu.List title="View as">
+              <NavLink
+                className="has-text-white"
+                exact={true}
+                activeClassName="is-active"
+                to="/card-view"
+              >
+                Cards
+              </NavLink>
+              <NavLink
+                className="has-text-white"
+                activeClassName="is-active"
+                to="/table-view"
+              >
+                List
+              </NavLink>
+            </Menu.List>
+
             <Redirect from="/" to="card-view" />
-          </Container>
-        </Section>
 
-        {moviesData.length > 0 ? (
-          <Section>
-            <Container>
-              <Route
-                path="/card-view"
-                render={() => <CardView movies={moviesData} />}
-              />
-              <Route
-                path="/table-view"
-                render={() => <TableView movies={moviesData} />}
-              />{" "}
-              <Pagination data={data} getPage={this._getPage} />
-            </Container>
-          </Section>
-        ) : (
-          <Section>
-            <Container>
-              <Loader />
-            </Container>
-          </Section>
-        )}
+            <Menu.List title="Sort By">
+              <Menu.List.Item onClick={() => this.sort("popularity")}>
+                Popularity
+              </Menu.List.Item>
+              <Menu.List.Item onClick={() => this.sort("year")}>
+                Year
+              </Menu.List.Item>
+              <Menu.List.Item onClick={() => this.sort("title")}>
+                Title
+              </Menu.List.Item>
+              <Menu.List.Item onClick={() => this.sort("rating")}>
+                Rating
+              </Menu.List.Item>
+            </Menu.List>
+          </Menu>
+
+          {moviesData.length > 0 ? (
+            <Section className="main-content column is-10 ">
+              <Container>
+                <Route
+                  path="/card-view"
+                  render={() => <CardView movies={moviesData} />}
+                />
+                <Route
+                  path="/table-view"
+                  render={() => <TableView movies={moviesData} />}
+                />{" "}
+                <Pagination data={data} getPage={this._getPage} />
+              </Container>
+            </Section>
+          ) : (
+            <Section className="column is-10 main-content">
+              <h1 className=" has-text-centered is-size-1 has-text-white">
+                NO DATA FOUND !
+              </h1>
+            </Section>
+          )}
+        </Section>
       </Router>
     );
   }
