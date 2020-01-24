@@ -1,16 +1,20 @@
 import React from "react";
-import { Card, Media, Heading } from "react-bulma-components";
+import { Card, Media } from "react-bulma-components";
 
-const MovieItem = ({ name, year, image }) => {
+const MovieItem = ({ movieData }) => {
   return (
     <Card>
-      <Card.Image src={image} />
-      <Card.Content>
+      <Card.Image
+        src={`https://image.tmdb.org/t/p/w300${movieData.poster_path}`}
+      />
+      <Card.Content className="is-paddingless card-content has-background-black">
         <Media>
           <Media.Item>
-            <Heading size={4}>
-              {name} ({year})
-            </Heading>
+            <p className="is-size-6 has-text-white"> {movieData.title}</p>
+            <p className="is-size-7 has-text-grey-light">
+              {" "}
+              {movieData.release_date.substring(0, 4)}
+            </p>
           </Media.Item>
         </Media>
       </Card.Content>

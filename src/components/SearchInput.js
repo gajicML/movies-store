@@ -1,18 +1,19 @@
 import React from "react";
 import { Container, Button } from "react-bulma-components";
 
-const SearchInput = ({ value, onChange, onClick }) => {
+const SearchInput = ({ value, onChange, onClick, onKeyDown }) => {
   return (
-    <Container>
+    <Container className="columns is-mobile is-centered">
       <input
-        autoFocus
         value={value}
         onChange={onChange}
         type="text"
-        className="center white-text"
+        className="center  is-medium  search-input"
         style={{ fontSize: 21 }}
+        onKeyDown={onKeyDown}
+        placeholder="Search Movies"
       />
-      <Button onClick={onClick} className="is-primary">
+      <Button onClick={onClick} className="is-dark is-medium">
         Search
       </Button>
     </Container>

@@ -3,21 +3,19 @@ import { Columns } from "react-bulma-components";
 import MovieItem from "./MovieItem";
 
 const CardView = ({ movies }) => {
-  console.log("movies", movies);
   return (
     <Columns>
-      <Columns.Column size={3}>
-        <MovieItem />
-      </Columns.Column>
-      <Columns.Column size={3}>
-        <MovieItem />
-      </Columns.Column>
-      <Columns.Column size={3}>
-        <MovieItem />
-      </Columns.Column>
-      <Columns.Column size={3}>
-        <MovieItem />
-      </Columns.Column>
+      {movies.map((movie, index) => {
+        return (
+          <Columns.Column
+            size={3}
+            key={index}
+            className="column is-12-mobile is-3-tablet is-3-desktop"
+          >
+            <MovieItem movieData={movie} />
+          </Columns.Column>
+        );
+      })}
     </Columns>
   );
 };
