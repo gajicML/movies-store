@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchMovie, fetchTopMovies } from "./store/actions/moviesActions";
+import { fetchMovie } from "./store/actions/moviesActions";
 import { connect } from "react-redux";
 import "./App.css";
 
@@ -8,7 +8,8 @@ import { Container, Section } from "react-bulma-components";
 import CardView from "./components/CardView";
 import TableView from "./components/TableView";
 import SearchInput from "./components/SearchInput";
-import LoaderComponent from "./components/Loader";
+import Pagination from "./components/Pagination";
+import Loader from "./components/Loader";
 import {
   BrowserRouter as Router,
   Route,
@@ -30,10 +31,17 @@ class App extends React.Component {
       this.props.getMovieList(this.state.searchInput);
     }
   };
+
+  _getPage = page => {
+    if (this.state.searchInput.length > 0) {
+      this.props.getMovieList(this.state.searchInput, page);
+    } else {
+      this.props.getTopMovies(page);
+    }
+  };
+
   _getMovie = () => {
-    // this.props.getMovieList(this.state.searchInput);
-    console.log("test");
-    this.props.getTopMovies(2);
+    this.props.getMovieList(this.state.searchInput);
   };
 
   _onChangeHandler = e => {
@@ -42,28 +50,32 @@ class App extends React.Component {
     });
   };
   render() {
-    const moviesData = this.props.movies.data.results
-      ? this.props.movies.data.results
-      : [];
-
+    const data = this.props.movies.data || {};
+    const moviesData = data.results ? data.results : [];
     return (
       <Router>
-        <Container>
-          <Section>
+        <Section className="search-section has-background-dark">
+          <Container>
             <SearchInput
               value={this.state.searchInput}
               onChange={this._onChangeHandler}
               onClick={this._getMovie}
               onKeyDown={this._handleKeyDown}
             />
-          </Section>
-          <Section>
+          </Container>
+        </Section>
+
+        <Section>
+          <Container>
             <Link to="/card-view">Cards</Link>
             <Link to="/table-view">List</Link>
             <Redirect from="/" to="card-view" />
-          </Section>
-          {moviesData.length > 0 ? (
-            <Section>
+          </Container>
+        </Section>
+
+        {moviesData.length > 0 ? (
+          <Section>
+            <Container>
               <Route
                 path="/card-view"
                 render={() => <CardView movies={moviesData} />}
@@ -72,13 +84,16 @@ class App extends React.Component {
                 path="/table-view"
                 render={() => <TableView movies={moviesData} />}
               />{" "}
-            </Section>
-          ) : (
-            <Section>
-              <h1 className="title"> NO DATA FOUND </h1>
-            </Section>
-          )}
-        </Container>
+              <Pagination data={data} getPage={this._getPage} />
+            </Container>
+          </Section>
+        ) : (
+          <Section>
+            <Container>
+              <Loader />
+            </Container>
+          </Section>
+        )}
       </Router>
     );
   }
@@ -93,7 +108,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getTopMovies: page => dispatch(fetchMovie(page)),
-    getMovieList: name => dispatch(fetchMovie(name))
+    getMovieList: (name, pageSearch) => dispatch(fetchMovie(name, pageSearch))
   };
 };
 

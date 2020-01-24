@@ -3,7 +3,7 @@ import { Container, Button } from "react-bulma-components";
 
 const SearchInput = ({ value, onChange, onClick, onKeyDown }) => {
   return (
-    <Container className="columns is-mobile is-centered">
+    <Container className="columns is-mobile is-centered search-container">
       <input
         value={value}
         onChange={onChange}
