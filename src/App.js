@@ -19,11 +19,22 @@ import {
 
 class App extends React.Component {
   state = {
-    searchInput: ""
+    searchInput: "",
+    localMovies: {},
+    order: "asc",
+    lastSorted: ""
   };
 
   componentDidMount() {
     this.props.getTopMovies(1);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const reduxStateMovies = { ...nextProps };
+
+    this.setState({
+      localMovies: reduxStateMovies.movies
+    });
   }
 
   _handleKeyDown = e => {
@@ -50,18 +61,39 @@ class App extends React.Component {
     });
   };
 
+  compare(a, b) {
+    const bandA = a.born;
+    const bandB = b.born;
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   sort = param => {
+    const copyStateMovies = this.state.localMovies;
     switch (param) {
       case "popularity":
-        console.log("popularity");
-
         break;
       case "year":
-        console.log(this.props);
-        console.log(this.setState({ movies: {} }));
         break;
       case "title":
-        console.log("title");
+        copyStateMovies.data.results.sort((a, b) => {
+          if (this.state.order === "asc" || this.state.lastSorted === "") {
+            this.setState({ order: "desc" });
+            return b.title.localeCompare(a.title);
+          }
+          this.setState({ order: "asc" });
+          return a.title.localeCompare(b.title);
+        });
+
+        this.setState({
+          localMovies: copyStateMovies,
+          lastSorted: "title"
+        });
         break;
       case "rating":
         console.log("rating");
@@ -72,14 +104,18 @@ class App extends React.Component {
   };
 
   render() {
-    const data = this.props.movies.data || {};
+    // const data = this.props.movies.data || {};
+    // const moviesData = data.results ? data.results : [];
+
+    const data = this.state.localMovies.data || {};
     const moviesData = data.results ? data.results : [];
+
     return (
       <Router>
         <Section className="header columns is-fullheight">
           <Section className="header-logo column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
             <p className="has-text-grey is-small">
-              <em>MovieStore by Mladen Gajic </em>
+              <em>MovieStore </em>
             </p>
           </Section>
           <Section className="header-search-section column is-10">
@@ -115,7 +151,7 @@ class App extends React.Component {
             <Redirect from="/" to="card-view" />
 
             <Menu.List title="Sort By">
-              <Menu.List.Item onClick={() => this.sort("popularity")}>
+              <Menu.List.Item onClick={() => this.sort("popularity", "asc")}>
                 Popularity
               </Menu.List.Item>
               <Menu.List.Item onClick={() => this.sort("year")}>

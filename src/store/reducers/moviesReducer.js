@@ -6,7 +6,6 @@ import {
 
 const initValue = {
   data: [],
-  loading: false,
   error: ""
 };
 
@@ -14,19 +13,16 @@ const moviesReducer = (state = initValue, action) => {
   switch (action.type) {
     case FETCH_MOVIE_PENDING:
       return {
-        ...state,
-        loading: true
+        ...state
       };
     case FETCH_MOVIE_SUCCESS:
       return {
         ...state,
-        loading: false,
         data: action.payload
       };
     case FETCH_MOVIE_ERROR:
       return {
         ...state,
-        loading: false,
         error: action.payload
       };
     default:
