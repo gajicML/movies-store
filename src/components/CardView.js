@@ -9,7 +9,7 @@ const CardView = ({ movies }) => {
         return (
           <Columns.Column
             key={index}
-            className="column is-12-mobile is-2-tablet is-2-desktop card-column"
+            className="column is-12-mobile is-2-tablet is-2-desktop card-column movieItem"
           >
             <MovieItem movieData={movie} />
           </Columns.Column>

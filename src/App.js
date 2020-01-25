@@ -21,7 +21,7 @@ class App extends React.Component {
   state = {
     searchInput: "",
     localMovies: {},
-    order: "asc",
+    order: true,
     lastSorted: ""
   };
 
@@ -61,45 +61,40 @@ class App extends React.Component {
     });
   };
 
-  compare(a, b) {
-    const bandA = a.born;
-    const bandB = b.born;
-    let comparison = 0;
-    if (bandA > bandB) {
-      comparison = 1;
-    } else if (bandA < bandB) {
-      comparison = -1;
-    }
-    return comparison;
-  }
+  sort_by = (field, reverse, primer) => {
+    const key = primer
+      ? function(x) {
+          return primer(x[field]);
+        }
+      : function(x) {
+          return x[field];
+        };
+
+    reverse = !reverse ? 1 : -1;
+
+    return function(a, b) {
+      return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
+    };
+  };
 
   sort = param => {
     const copyStateMovies = this.state.localMovies;
-    switch (param) {
-      case "popularity":
-        break;
-      case "year":
-        break;
-      case "title":
-        copyStateMovies.data.results.sort((a, b) => {
-          if (this.state.order === "asc" || this.state.lastSorted === "") {
-            this.setState({ order: "desc" });
-            return b.title.localeCompare(a.title);
-          }
-          this.setState({ order: "asc" });
-          return a.title.localeCompare(b.title);
-        });
+    console.log(typeof param);
+    const conditon = param === "title" ? a => a.toUpperCase() : parseInt;
 
+    switch (param) {
+      case param:
+        copyStateMovies.data.results.sort(
+          this.sort_by(param, this.state.order, conditon)
+        );
         this.setState({
           localMovies: copyStateMovies,
-          lastSorted: "title"
+          order: !this.state.order
         });
+
         break;
-      case "rating":
-        console.log("rating");
-        break;
+
       default:
-        console.log("def");
     }
   };
 
@@ -151,16 +146,16 @@ class App extends React.Component {
             <Redirect from="/" to="card-view" />
 
             <Menu.List title="Sort By">
-              <Menu.List.Item onClick={() => this.sort("popularity", "asc")}>
+              <Menu.List.Item onClick={() => this.sort("popularity")}>
                 Popularity
               </Menu.List.Item>
-              <Menu.List.Item onClick={() => this.sort("year")}>
+              <Menu.List.Item onClick={() => this.sort("release_date")}>
                 Year
               </Menu.List.Item>
               <Menu.List.Item onClick={() => this.sort("title")}>
                 Title
               </Menu.List.Item>
-              <Menu.List.Item onClick={() => this.sort("rating")}>
+              <Menu.List.Item onClick={() => this.sort("vote_average")}>
                 Rating
               </Menu.List.Item>
             </Menu.List>
