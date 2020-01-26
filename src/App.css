@@ -162,15 +162,6 @@ section.main .table td,
 }
 /* MAIN SECTION END*/
 
-/* RESPONSIVE START*/
-
-@media screen and (max-width: 360px) {
-  .search-container input,
-  .search-container button {
-    font-size: 1rem !important;
-  }
-}
-
 /*STARS*/
 
 .stars-outer {
@@ -201,7 +192,7 @@ section.main .table td,
   display: inline-block;
 }
 
-.pagination a {
+.pagination span {
   color: rgb(255, 255, 255);
   float: left;
   padding: 8px 16px;
@@ -211,16 +202,53 @@ section.main .table td,
   margin: 0 4px;
 }
 
-.pagination a.active {
+.pagination span.active {
   background-color: #3273dc;
   color: white;
   border: 1px solid #3273dc;
 }
 
-.pagination a:hover {
+.pagination span:hover {
+  cursor: pointer;
   background-color: #2848c7;
 }
 
-.pagination span {
+.pagination .current {
   color: rgb(172, 172, 172);
+}
+
+/* RESPONSIVE START*/
+@media screen and (max-width: 768px) {
+  section.columns {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .stars-outer {
+    bottom: 2.5em;
+    float: right;
+  }
+  .table tbody {
+    font-size: 0.6em;
+  }
+  section.main .table thead th {
+    font-size: 0.8em;
+  }
+
+  .pagination span {
+    font-size: 0.7em;
+    padding: 4px 8px;
+  }
+  div.card {
+    box-shadow: none;
+  }
+  #year.has-text-grey-light {
+    color: #fff !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .search-container input,
+  .search-container button {
+    font-size: 1rem !important;
+  }
 }

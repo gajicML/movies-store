@@ -9,36 +9,26 @@ function Pagination({ data, getPage }) {
 
   return (
     <Container className="columns is-mobile is-centered search-container">
-      <div class="pagination">
+      <div className="pagination">
         {currentPage > 3 ? (
-          <a href="#" onClick={() => getPage(1)}>
-            {currentPage > 3 ? 1 : ""}
-          </a>
+          <span onClick={() => getPage(1)}>{currentPage > 3 ? 1 : ""}</span>
         ) : (
           ""
         )}
 
-        <span>{currentPage > 3 ? "..." : ""}</span>
+        <span className="current">{currentPage > 3 ? "..." : ""}</span>
 
         {prevPage === "" ? (
           ""
         ) : (
-          <a href="#" onClick={() => getPage(prevPage)}>
-            {prevPage}
-          </a>
+          <span onClick={() => getPage(prevPage)}>{prevPage}</span>
         )}
 
-        <a href="#" className="active">
-          {currentPage}
-        </a>
+        <span className="active">{currentPage}</span>
 
-        <a href="#" onClick={() => getPage(nextPage)}>
-          {nextPage}
-        </a>
+        <span onClick={() => getPage(nextPage)}>{nextPage}</span>
         <span>{totalPages > 0 || currentPage === totalPages ? "..." : ""}</span>
-        <a href="#" onClick={() => getPage(totalPages)}>
-          {totalPages}
-        </a>
+        <span onClick={() => getPage(totalPages)}>{totalPages}</span>
       </div>
     </Container>
   );

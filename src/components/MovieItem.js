@@ -16,7 +16,7 @@ const MovieItem = ({ movieData }) => {
           <Media.Item>
             <p className="is-size-6 has-text-white"> {title}</p>
             <div>
-              <p className="is-size-6 has-text-grey-light">
+              <p id="year" className="is-size-6 has-text-grey-light">
                 {release_date ? release_date.substring(0, 4) : ""}
               </p>
               <Stars vote_average={vote_average} />
