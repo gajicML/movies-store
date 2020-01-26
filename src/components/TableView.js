@@ -1,10 +1,32 @@
 import React from "react";
+import { Table } from "react-bulma-components";
 
-const TableView = () => {
+const TableView = ({ movies }) => {
+  console.log(movies);
   return (
-    <div>
-      <h1 className="title">TABLE VJU TABLE VJU TABLE VJU TABLE VJU</h1>
-    </div>
+    <Table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Rating</th>
+          <th>Original Title</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {movies.map((movie, index) => {
+          return (
+            <tr key={index}>
+              <td>{movie.title} </td>
+              <td>{movie.release_date}</td>
+              <td>{movie.vote_average}</td>
+              <td>{movie.original_title}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
   );
 };
 
