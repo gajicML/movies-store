@@ -96,7 +96,6 @@ div.card-content {
   cursor: pointer;
 }
 
-/* MAIN SECTION END*/
 section.main {
   padding-top: 0;
   padding: 0;
@@ -122,6 +121,47 @@ section.main .main-content .card-column > .card {
 section.main .main-content .card-column .image img {
   border-radius: 5px;
 }
+
+section.main .table thead {
+  background: #000;
+}
+section.main .table thead td,
+section.main .table thead th {
+  color: #fff;
+}
+section.main .table thead th {
+  border-width: 0 0 1px;
+  border-color: rgba(255, 255, 255, 0.288);
+}
+section.main td {
+  color: #fff;
+}
+section.main .table.is-striped tbody tr:not(.is-selected):nth-child(2n) {
+  background-color: #1d1d1d;
+}
+section.main .table tr {
+  background-color: #000;
+}
+section.main .table td,
+.table th {
+  border: none;
+}
+
+.bars.icon {
+  position: absolute;
+}
+.bars.icon.is-large {
+  height: 2rem;
+  width: 4rem;
+}
+.bars.icon.is-large i {
+  font-size: 2em;
+}
+
+.pagination-container > span {
+}
+/* MAIN SECTION END*/
+
 /* RESPONSIVE START*/
 
 @media screen and (max-width: 360px) {
@@ -155,4 +195,32 @@ section.main .main-content .card-column .image img {
 .stars-inner::before {
   content: "\f005 \f005 \f005 \f005 \f005";
   color: #f8ce0b;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: rgb(255, 255, 255);
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  /* border: 1px solid #ddd; */
+  margin: 0 4px;
+}
+
+.pagination a.active {
+  background-color: #3273dc;
+  color: white;
+  border: 1px solid #3273dc;
+}
+
+.pagination a:hover {
+  background-color: #2848c7;
+}
+
+.pagination span {
+  color: rgb(172, 172, 172);
 }

@@ -1,15 +1,15 @@
 import React from "react";
 import { fetchMovie } from "./store/actions/moviesActions";
 import { connect } from "react-redux";
+
 import "./App.css";
 
 import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Container, Section, Menu } from "react-bulma-components";
+import { Container, Section, Menu, Icon } from "react-bulma-components";
 import CardView from "./components/CardView";
 import TableView from "./components/TableView";
 import SearchInput from "./components/SearchInput";
 import Pagination from "./components/Pagination";
-import Loader from "./components/Loader";
 import {
   BrowserRouter as Router,
   Route,
@@ -22,7 +22,7 @@ class App extends React.Component {
     searchInput: "",
     localMovies: {},
     order: true,
-    lastSorted: ""
+    activeMenu: false
   };
 
   componentDidMount() {
@@ -73,7 +73,8 @@ class App extends React.Component {
     reverse = !reverse ? 1 : -1;
 
     return function(a, b) {
-      return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
+      // prettier-ignore
+      return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
     };
   };
 
@@ -98,6 +99,12 @@ class App extends React.Component {
     }
   };
 
+  toggleMenu = () => {
+    this.setState({
+      activeMenu: !this.state.activeMenu
+    });
+  };
+
   render() {
     // const data = this.props.movies.data || {};
     // const moviesData = data.results ? data.results : [];
@@ -105,10 +112,12 @@ class App extends React.Component {
     const data = this.state.localMovies.data || {};
     const moviesData = data.results ? data.results : [];
 
+    const className = this.state.activeMenu ? "is-block" : "is-hidden-mobile";
+
     return (
       <Router>
         <Section className="header columns is-fullheight">
-          <Section className="header-logo column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+          <Section className="header-logo column is-2 is-narrow-mobile is-fullheight section ">
             <p className="has-text-grey is-small">
               <em>MovieStore </em>
             </p>
@@ -123,8 +132,17 @@ class App extends React.Component {
           </Section>
         </Section>
 
+        <Icon
+          icon="bars"
+          color="white"
+          className="is-large bars is-hidden-tablet"
+          onClick={() => this.toggleMenu()}
+        />
+
         <Section className="main columns is-fullheight">
-          <Menu className="main-menu column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+          <Menu
+            className={`main-menu column is-2 is-narrow-mobile is-fullheight section ${className}`}
+          >
             <Menu.List title="View as">
               <NavLink
                 className="has-text-white"

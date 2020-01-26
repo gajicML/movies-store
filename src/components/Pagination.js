@@ -9,28 +9,36 @@ function Pagination({ data, getPage }) {
 
   return (
     <Container className="columns is-mobile is-centered search-container">
-      <div className="has-text-gray pagination-container">
-        <span className="is-size-3" onClick={() => getPage(1)}>
-          {currentPage > 3 ? 1 : ""}
-        </span>
-        <span>{currentPage > 3 ? ". . ." : ""}</span>
-        &nbsp; &nbsp; &nbsp; &nbsp;
-        <span className="is-size-3" onClick={() => getPage(prevPage)}>
-          {prevPage}
-        </span>
-        &nbsp; &nbsp; &nbsp; &nbsp;
-        <span className="has-text-white is-size-3">{currentPage}</span>
-        &nbsp; &nbsp; &nbsp; &nbsp;
-        <span className="is-size-3" onClick={() => getPage(nextPage)}>
+      <div class="pagination">
+        {currentPage > 3 ? (
+          <a href="#" onClick={() => getPage(1)}>
+            {currentPage > 3 ? 1 : ""}
+          </a>
+        ) : (
+          ""
+        )}
+
+        <span>{currentPage > 3 ? "..." : ""}</span>
+
+        {prevPage === "" ? (
+          ""
+        ) : (
+          <a href="#" onClick={() => getPage(prevPage)}>
+            {prevPage}
+          </a>
+        )}
+
+        <a href="#" className="active">
+          {currentPage}
+        </a>
+
+        <a href="#" onClick={() => getPage(nextPage)}>
           {nextPage}
-        </span>
-        &nbsp; &nbsp; &nbsp; &nbsp;
-        <span>
-          {totalPages > 0 || currentPage === totalPages ? ". . ." : ""}
-        </span>
-        <span className="is-size-3" onClick={() => getPage(totalPages)}>
+        </a>
+        <span>{totalPages > 0 || currentPage === totalPages ? "..." : ""}</span>
+        <a href="#" onClick={() => getPage(totalPages)}>
           {totalPages}
-        </span>
+        </a>
       </div>
     </Container>
   );
