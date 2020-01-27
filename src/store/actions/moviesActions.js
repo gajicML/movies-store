@@ -21,12 +21,12 @@ const fetchMovieError = error => ({
   payload: error
 });
 
-export const fetchMovie = (arg1, pageSearch = 1) => {
+export const fetchMovie = (searchQuery, page = 1) => {
   let url = "";
-  if (typeof arg1 === "number") {
-    url = `${MOVIE_DB_BASE_URL}/movie/upcoming?api_key=${MOVIE_DB_API_KEY}&language=en-US&page=${arg1}`;
+  if (!searchQuery) {
+    url = `${MOVIE_DB_BASE_URL}/movie/upcoming?api_key=${MOVIE_DB_API_KEY}&language=en-US&page=${page}`;
   } else {
-    url = `${MOVIE_DB_BASE_URL}/search/movie?api_key=${MOVIE_DB_API_KEY}&language=en-US&query=${arg1}&page=${pageSearch}`;
+    url = `${MOVIE_DB_BASE_URL}/search/movie?api_key=${MOVIE_DB_API_KEY}&language=en-US&query=${searchQuery}&page=${page}`;
   }
   return async dispatch => {
     dispatch(fetchMoviePending());

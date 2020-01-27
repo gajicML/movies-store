@@ -9,6 +9,7 @@ import { Container, Section, Menu, Icon } from "react-bulma-components";
 import CardView from "./components/CardView";
 import TableView from "./components/TableView";
 import SearchInput from "./components/SearchInput";
+import NotFound from "./components/NotFound";
 import Pagination from "./components/Pagination";
 import {
   BrowserRouter as Router,
@@ -26,10 +27,10 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getTopMovies(1);
+    this.props.getTopMovies();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const reduxStateMovies = { ...nextProps };
 
     this.setState({
@@ -47,7 +48,7 @@ class App extends React.Component {
     if (this.state.searchInput.length > 0) {
       this.props.getMovieList(this.state.searchInput, page);
     } else {
-      this.props.getTopMovies(page);
+      this.props.getTopMovies();
     }
   };
 
@@ -80,7 +81,6 @@ class App extends React.Component {
 
   sort = param => {
     const copyStateMovies = this.state.localMovies;
-    console.log(typeof param);
     const conditon = param === "title" ? a => a.toUpperCase() : parseInt;
 
     switch (param) {
@@ -141,7 +141,7 @@ class App extends React.Component {
 
         <Section className="main columns is-fullheight">
           <Menu
-            className={`main-menu column is-2 is-narrow-mobile is-fullheight section ${className}`}
+            className={`main-menu column is-2 is-fullheight section ${className}`}
           >
             <Menu.List title="View as">
               <NavLink
@@ -194,10 +194,8 @@ class App extends React.Component {
               </Container>
             </Section>
           ) : (
-            <Section className="column is-10 main-content">
-              <h1 className=" has-text-centered is-size-1 has-text-white">
-                NO DATA FOUND !
-              </h1>
+            <Section className="column is-10 main-content not-found">
+              <NotFound />
             </Section>
           )}
         </Section>
@@ -214,8 +212,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTopMovies: page => dispatch(fetchMovie(page)),
-    getMovieList: (name, pageSearch) => dispatch(fetchMovie(name, pageSearch))
+    getTopMovies: () => dispatch(fetchMovie()),
+    getMovieList: (searchQuery, page) => dispatch(fetchMovie(searchQuery, page))
   };
 };
 

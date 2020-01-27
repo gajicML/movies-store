@@ -55,7 +55,7 @@ input:focus {
 .search-input {
   border: none;
   color: #fff;
-  padding: 0.7em 6.5em;
+  padding: 1.4em 6.5em 0.7em;
   padding-top: 1.4em;
   background: none;
   width: 100%;
@@ -109,6 +109,7 @@ section.main .main-content {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  min-height: 88vh;
 }
 
 section.main .main-content .card-column {
@@ -120,6 +121,9 @@ section.main .main-content .card-column > .card {
 
 section.main .main-content .card-column .image img {
   border-radius: 5px;
+}
+section.main-content.not-found {
+  height: 88vh;
 }
 
 section.main .table thead {
@@ -223,9 +227,12 @@ section.main .table td,
     margin-left: 0;
     margin-right: 0;
   }
+  section.header-logo {
+    display: none;
+  }
   .stars-outer {
-    bottom: 2.5em;
-    float: right;
+    /* bottom: 2.5em;
+    float: right; */
   }
   .table tbody {
     font-size: 0.6em;
@@ -243,6 +250,12 @@ section.main .table td,
   }
   #year.has-text-grey-light {
     color: #fff !important;
+  }
+  div.columns.is-multiline {
+    display: flex;
+  }
+  .search-input {
+    padding: 1.4em 5.5em 0.7em;
   }
 }
 
