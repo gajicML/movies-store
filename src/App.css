@@ -261,6 +261,15 @@ section.main .table td,
   .search-input {
     padding: 1.4em 5.5em 0.7em;
   }
+  section.main .main-menu {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+  }
+  .bars.icon.is-large {
+    position: fixed;
+    z-index: 999;
+  }
 }
 
 @media screen and (max-width: 360px) {

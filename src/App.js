@@ -95,7 +95,8 @@ class App extends React.Component {
         );
         this.setState({
           localMovies: copyStateMovies,
-          order: !this.state.order
+          order: !this.state.order,
+          activeMenu: false
         });
 
         break;
@@ -194,7 +195,8 @@ class App extends React.Component {
                 <Route
                   path="/table-view"
                   render={() => <TableView movies={moviesData} />}
-                />{" "}
+                />
+
                 <Pagination data={data} getPage={this._getPage} />
               </Container>
             </Section>
