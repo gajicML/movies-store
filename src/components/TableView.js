@@ -2,7 +2,6 @@ import React from "react";
 import { Table } from "react-bulma-components";
 
 const TableView = ({ movies }) => {
-  console.log(movies);
   return (
     <Table>
       <thead>

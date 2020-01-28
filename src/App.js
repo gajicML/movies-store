@@ -27,7 +27,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getTopMovies();
+    this.props.getTopMovies(false, 1);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -45,10 +45,11 @@ class App extends React.Component {
   };
 
   _getPage = page => {
+    console.log("CLICKED ", page);
     if (this.state.searchInput.length > 0) {
       this.props.getMovieList(this.state.searchInput, page);
     } else {
-      this.props.getTopMovies();
+      this.props.getTopMovies(false, page);
     }
   };
 
@@ -212,7 +213,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTopMovies: () => dispatch(fetchMovie()),
+    getTopMovies: (searchQuery, page) =>
+      dispatch(fetchMovie(searchQuery, page)),
     getMovieList: (searchQuery, page) => dispatch(fetchMovie(searchQuery, page))
   };
 };

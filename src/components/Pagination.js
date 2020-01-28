@@ -16,7 +16,7 @@ function Pagination({ data, getPage }) {
           ""
         )}
 
-        <span className="current">{currentPage > 3 ? "..." : ""}</span>
+        <span className="dots">{currentPage > 3 ? "..." : ""}</span>
 
         {prevPage === "" ? (
           ""
@@ -27,7 +27,9 @@ function Pagination({ data, getPage }) {
         <span className="active">{currentPage}</span>
 
         <span onClick={() => getPage(nextPage)}>{nextPage}</span>
-        <span>{totalPages > 0 || currentPage === totalPages ? "..." : ""}</span>
+        <span className="dots">
+          {totalPages > 0 || currentPage === totalPages ? "..." : ""}
+        </span>
         <span onClick={() => getPage(totalPages)}>{totalPages}</span>
       </div>
     </Container>
