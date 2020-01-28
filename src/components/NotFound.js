@@ -2,16 +2,16 @@ import React from "react";
 import Loader from "react-loader-spinner";
 
 class NotFound extends React.Component {
-  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = { hidden: true };
   }
+  _isMounted = false;
 
   componentDidMount() {
     this._isMounted = true;
     setTimeout(() => {
-      this.setState({ hidden: false });
+      if (this._isMounted) this.setState({ hidden: false });
     }, 3000);
   }
 
