@@ -38,14 +38,13 @@ class App extends React.Component {
     });
   }
 
-  _handleKeyDown = e => {
-    if (e.key === "Enter") {
-      this.props.getMovieList(this.state.searchInput);
-    }
-  };
+  // _handleKeyDown = e => {
+  //   if (e.key === "Enter") {
+  //     this.props.getMovieList(this.state.searchInput);
+  //   }
+  // };
 
   _getPage = page => {
-    console.log("CLICKED ", page);
     if (this.state.searchInput.length > 0) {
       this.props.getMovieList(this.state.searchInput, page);
     } else {
@@ -58,9 +57,14 @@ class App extends React.Component {
   };
 
   _onChangeHandler = e => {
-    this.setState({
-      searchInput: e.target.value
-    });
+    this.setState(
+      {
+        searchInput: e.target.value
+      },
+      function() {
+        this.props.getMovieList(this.state.searchInput);
+      }
+    );
   };
 
   sort_by = (field, reverse, primer) => {
@@ -75,8 +79,8 @@ class App extends React.Component {
     reverse = !reverse ? 1 : -1;
 
     return function(a, b) {
-      // prettier-ignore
-      return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+      // eslint-disable-next-line
+      return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
     };
   };
 
@@ -128,7 +132,7 @@ class App extends React.Component {
               value={this.state.searchInput}
               onChange={this._onChangeHandler}
               onClick={this._getMovie}
-              onKeyDown={this._handleKeyDown}
+              // onKeyDown={this._handleKeyDown}
             />
           </Section>
         </Section>
