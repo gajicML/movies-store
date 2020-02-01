@@ -194,7 +194,9 @@ class App extends React.Component {
                 />
                 <Route
                   path="/table-view"
-                  render={() => <TableView movies={moviesData} />}
+                  render={() => (
+                    <TableView movies={moviesData} sort={this.sort} />
+                  )}
                 />
 
                 <Pagination data={data} getPage={this._getPage} />

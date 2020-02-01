@@ -151,6 +151,10 @@ section.main .table td,
   border: none;
 }
 
+section.main .table thead th:not(:last-child) {
+  cursor: pointer;
+}
+
 .bars.icon {
   position: absolute;
 }

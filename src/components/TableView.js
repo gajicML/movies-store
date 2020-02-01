@@ -1,14 +1,32 @@
 import React from "react";
 import { Table } from "react-bulma-components";
 
-const TableView = ({ movies }) => {
+const TableView = ({ movies, sort }) => {
   return (
     <Table>
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Year</th>
-          <th>Rating</th>
+          <th
+            onClick={() => {
+              sort("title");
+            }}
+          >
+            Title
+          </th>
+          <th
+            onClick={() => {
+              sort("release_date");
+            }}
+          >
+            Year
+          </th>
+          <th
+            onClick={() => {
+              sort("vote_average");
+            }}
+          >
+            Rating
+          </th>
           <th>Original Title</th>
         </tr>
       </thead>
